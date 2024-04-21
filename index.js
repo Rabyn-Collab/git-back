@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import cors from 'cors';
 const port = 5000;
 const app = express();
 
@@ -16,7 +17,7 @@ mongoose.connect('mongodb+srv://teams700:moles900@cluster0.no9horl.mongodb.net/S
   console.log(err);
 })
 
-
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
