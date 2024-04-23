@@ -3,11 +3,44 @@ import Product from "../models/Product.js";
 
 
 export const getAllProducts = async (req, res) => {
+  const queryObj = { ...req.query };
+  const excludeFields = ['sort', 'page', 'fields', 'search'];
+  excludeFields.forEach((val) => delete queryObj[val]);
+
   try {
-    const data = await Product.find({});
+
+    if (req.query.search) {
+      queryObj.product_name = { $regex: req.query.search, $options: 'i' }
+    }
+
+    let query = Product.find(queryObj);
+
+    if (req.query.fields) {
+      const selectFields = req.query.fields.split(',').join('');
+      query = query.select(selectFields);
+    }
+
+    if (req.query.sort) {
+      const sorts = req.query.sort.split(',').join('');
+      query = query.sort(sorts);
+    }
+
+
+
+    const page = req.query.page || 1;
+    const limit = req.query.limit || 10;
+
+    const skip = (page - 1) * limit;
+
+    query = query.skip(skip).limit(limit);
+
+    const data = await query;
+
+    const count = await Product.countDocuments(query);
     return res.status(200).json({
       status: 'success',
-      data
+      data,
+      count
     });
   } catch (err) {
     return res.status(400).json({
