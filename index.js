@@ -7,6 +7,13 @@ const port = 5000;
 const app = express();
 
 
+// const p = {
+//   name: 'rab',
+//   age: 90
+// };
+// delete p['age'];
+
+// console.log(p);
 
 
 mongoose.connect('mongodb+srv://teams700:moles900@cluster0.no9horl.mongodb.net/Shops').then((val) => {

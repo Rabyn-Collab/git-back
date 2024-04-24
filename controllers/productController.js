@@ -2,9 +2,16 @@ import Product from "../models/Product.js";
 
 
 
+export const getTopProducts = (req, res, next) => {
+  req.query = { rating: { $gt: 4 } };
+  req.query.limit = 5;
+  next();
+}
+
+
 export const getAllProducts = async (req, res) => {
   const queryObj = { ...req.query };
-  const excludeFields = ['sort', 'page', 'fields', 'search'];
+  const excludeFields = ['sort', 'page', 'fields', 'search', 'limit'];
   excludeFields.forEach((val) => delete queryObj[val]);
 
   try {
@@ -39,7 +46,7 @@ export const getAllProducts = async (req, res) => {
     const count = await Product.countDocuments(query);
     return res.status(200).json({
       status: 'success',
-      data,
+      products: data,
       count
     });
   } catch (err) {
