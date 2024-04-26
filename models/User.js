@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   shippingAddress: {
     address: { type: String, default: '' },
     city: { type: String, default: '' },
-    isEmpty: { type: String, default: false }
+    isEmpty: { type: Boolean, default: true }
   }
 }, { timestamps: true });
 
