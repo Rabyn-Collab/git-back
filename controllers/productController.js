@@ -90,6 +90,7 @@ export const getProductById = async (req, res) => {
 }
 
 export const addProduct = async (req, res) => {
+
   try {
     // const data = await Product.find({});
     return res.status(200).json({

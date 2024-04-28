@@ -1,6 +1,11 @@
 {
   "name": "backened",
   "type": "module",
+  "imports": {
+    "lodash": "/node_modules/lodash-es/lodash.js",
+    "lodash/": "/node_modules/lodash-es/"
+  },
+  "extension": "js",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -13,8 +18,10 @@
   "dependencies": {
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "express-fileupload": "^1.5.0",
     "express-joi-validation": "^5.0.1",
     "fs-extra": "^11.2.0",
     "joi": "^17.12.3",

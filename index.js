@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import fileUpload from 'express-fileupload';
 import cors from 'cors';
 const port = 5000;
 const app = express();
@@ -26,8 +27,15 @@ mongoose.connect('mongodb+srv://teams700:moles900@cluster0.no9horl.mongodb.net/S
 
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
+
+app.use(fileUpload({
+  limits: { fileSize: 5 * 1024 * 1024 },
+  abortOnLimit: true
+}));
 
 app.get('/', (req, res) => {
+
   return res.status(200).json({
     msg: 'welcome to my server'
   });
