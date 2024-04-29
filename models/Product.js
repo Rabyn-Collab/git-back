@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const productSchema = new mongoose.Schema({
   product_name: {
     type: String,
+    unique: true,
     required: true
   },
   product_detail: {
@@ -15,19 +16,21 @@ const productSchema = new mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true
+    default: 0
   },
   numReviews: {
     type: Number,
-    required: true
+    default: 0
   },
   product_image: {
     type: String,
+    unique: true,
     required: true
   },
 
   brand: {
     type: String,
+    enum: ['Nike', 'Panasonic', 'Samsung', 'Dolce', 'Kfc'],
     required: true
   },
 

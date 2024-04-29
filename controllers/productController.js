@@ -1,6 +1,6 @@
 import Product from "../models/Product.js";
 import mongoose from "mongoose";
-
+import fs from 'fs';
 
 export const getTopProducts = (req, res, next) => {
   req.query = { rating: { $gt: 4 } };
@@ -81,6 +81,7 @@ export const getProductById = async (req, res) => {
 
 
 
+
   } catch (err) {
     return res.status(400).json({
       status: 'error',
@@ -89,15 +90,38 @@ export const getProductById = async (req, res) => {
   }
 }
 
+
+
 export const addProduct = async (req, res) => {
+  const {
+    product_name,
+    product_detail,
+    product_price,
+    brand,
+    category,
+    countInStock
+  } = req.body;
 
   try {
-    // const data = await Product.find({});
+    const data = await Product.create({
+      product_name,
+      product_detail,
+      brand,
+      category,
+      countInStock,
+      product_price,
+      product_image: req.imagePath
+    });
     return res.status(200).json({
       status: 'success',
       message: 'product added successfully'
     });
   } catch (err) {
+
+    if (err.code !== 11000) {
+      fs.unlink(`.${req.imagePath}`, (err) => console.log(err));
+    }
+
     return res.status(400).json({
       status: 'error',
       message: `${err}`
