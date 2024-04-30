@@ -128,3 +128,63 @@ export const addProduct = async (req, res) => {
     });
   }
 }
+
+
+
+
+
+export const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const {
+    product_name,
+    product_detail,
+    product_price,
+    brand,
+    category,
+    countInStock
+  } = req.body;
+
+  try {
+
+    if (req.imagePath) {
+      const data = await Product.findByIdAndUpdate(id, {
+        product_name,
+        product_detail,
+        brand,
+        category,
+        countInStock,
+        product_price,
+        product_image: req.imagePath
+      });
+      return res.status(200).json({
+        status: 'success',
+        message: 'product added successfully'
+      });
+    } else {
+      const data = await Product.findByIdAndUpdate(id, {
+        product_name,
+        product_detail,
+        brand,
+        category,
+        countInStock,
+        product_price,
+      });
+      return res.status(200).json({
+        status: 'success',
+        message: 'product added successfully'
+      });
+    }
+
+
+  } catch (err) {
+
+    if (err.code !== 11000) {
+      fs.unlink(`.${req.imagePath}`, (err) => console.log(err));
+    }
+
+    return res.status(400).json({
+      status: 'error',
+      message: `${err}`
+    });
+  }
+}
