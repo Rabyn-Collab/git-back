@@ -1,7 +1,8 @@
 import express from 'express';
-import { userLogin, userRegister } from '../controllers/userController.js';
+import { userLogin, userRegister, userUpdate } from '../controllers/userController.js';
 import Joi from 'joi';
 import validator from 'express-joi-validation';
+import { checkUser } from '../middleware/checkUser.js';
 
 const validate = validator.createValidator({});
 
@@ -26,6 +27,8 @@ const router = express.Router();
 
 router.route('/login').post(validate.body(loginSchema), userLogin).all(handleAll);
 router.route('/register').post(validate.body(registerSchema), userRegister).all(handleAll);
+
+router.route('/update').patch(checkUser, userUpdate);
 
 
 

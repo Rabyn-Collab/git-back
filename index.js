@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import productRoutes from './routes/productRoutes.js';
 import userRoutes from './routes/userRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 import fileUpload from 'express-fileupload';
 import cors from 'cors';
 const port = 5000;
@@ -44,6 +45,7 @@ app.get('/', (req, res) => {
 
 app.use('/products', productRoutes);
 app.use('/users', userRoutes);
+app.use('/orders', orderRoutes);
 
 
 app.use((req, res) => {

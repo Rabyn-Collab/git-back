@@ -188,3 +188,27 @@ export const updateProduct = async (req, res) => {
     });
   }
 }
+
+
+
+export const removeProduct = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const exist = await Product.findById(id);
+    if (!exist) return res.status(404).json({ message: 'product not found' });
+    fs.unlink(`.${exist.product_image}`, (err) => console.log(err));
+    await exist.deleteOne();
+
+    return res.status(200).json({
+      status: 'success',
+      message: 'product removed successfully'
+    });
+  } catch (err) {
+    return res.status(400).json({
+      status: 'error',
+      message: `${err}`
+    });
+  }
+}
+
