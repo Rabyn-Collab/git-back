@@ -49,17 +49,14 @@ app.use('/orders', orderRoutes);
 
 
 app.use((req, res) => {
+
+
   return res.status(404).json({
     status: 'error',
     message: 'not found'
   });
 });
 
-
-// const handleReqRes = (req, res, next) => {
-//   console.log('hello jee middleware');
-//   next();
-// }
 
 
 

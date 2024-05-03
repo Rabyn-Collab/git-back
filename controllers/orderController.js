@@ -20,6 +20,22 @@ export const getAllOrders = async (req, res) => {
   }
 }
 
+export const getOrderByUser = async (req, res) => {
+
+  try {
+    const data = await Order.find({ user: req.userId });
+    return res.status(200).json({
+      status: 'success',
+      orders: data,
+    });
+
+  } catch (err) {
+    return res.status(400).json({
+      status: 'error',
+      message: `${err}`
+    });
+  }
+}
 
 export const getOrderById = async (req, res) => {
   const { id } = req.params;
@@ -61,7 +77,7 @@ export const addOrder = async (req, res) => {
     await Order.create({
       totalAmount,
       orderItems,
-      user: req.useId
+      user: req.userId
     });
     return res.status(200).json({
       status: 'success',

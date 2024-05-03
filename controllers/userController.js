@@ -19,6 +19,12 @@ export const userLogin = async (req, res) => {
         isAdmin: isExist.isAdmin
       }, 'tokenKey');
 
+      // res.cookie('jwt', token, {
+      //   expires: false,
+      //   secure: false,
+      //   httpOnly: true
+      // });
+
       return res.status(200).json({
         status: 'successfully login',
         data: {
