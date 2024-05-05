@@ -224,12 +224,16 @@ export const addReview = async (req, res) => {
 
     const isExist = await Product.findById(id);
     if (isExist) {
-      const isReviewExist = isExist.reviews.find((review) => review.user === req.userId);
+      const isReviewExist = isExist.reviews.find((review) => review.user.toString() === req.userId);
       if (isReviewExist) return res.status(400).json({ message: 'you already reviewd it' });
       isExist.reviews.push({ comment, rating, username, user: req.userId });
       isExist.rating = isExist.reviews.reduce((a, b) => a + b.rating, 0) / isExist.reviews.length;
       isExist.numReviews = isExist.reviews.length;
       await isExist.save();
+      return res.status(200).json({
+        status: 'success',
+        message: `review added successfully`
+      });
     } else {
       return res.status(404).json({
         status: 'error',
