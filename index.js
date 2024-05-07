@@ -25,7 +25,7 @@ mongoose.connect('mongodb+srv://teams700:moles900@cluster0.no9horl.mongodb.net/S
 }).catch((err) => {
   console.log(err);
 })
-
+//somes
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static('uploads'));
